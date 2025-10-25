@@ -2,6 +2,7 @@ rpc:
   name: zhang-yaml-rpc
   version: 3.0
   serverPort: 8082
+  mock: true
 
 test:
   test-content: test

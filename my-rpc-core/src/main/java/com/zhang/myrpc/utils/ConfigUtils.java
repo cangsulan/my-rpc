@@ -38,7 +38,7 @@ public class ConfigUtils {
      */
     public static <T> T loadConfig(Class<T> tClass, String prefix, String environment) {
         String baseName = "application";
-        String[] extensions = {".properties", ".yml", ".yaml", ".json"};
+        String[] extensions = {".yaml",".yml",".properties", ".json"};
 
         // 优先加载带 environment 的文件
         for (String ext : extensions) {
