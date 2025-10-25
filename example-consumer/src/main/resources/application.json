@@ -1,0 +1,8 @@
+{
+  "rpc": {
+    "name": "zhang-json-rpc",
+    "version": "4.0",
+    "serverPort": "8083"
+  },
+  "test": "test-content"
+}

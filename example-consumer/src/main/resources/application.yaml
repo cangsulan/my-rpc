@@ -1,0 +1,7 @@
+rpc:
+  name: zhang-yaml-rpc
+  version: 3.0
+  serverPort: 8082
+
+test:
+  test-content: test
