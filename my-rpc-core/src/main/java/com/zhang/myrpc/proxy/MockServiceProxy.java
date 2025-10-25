@@ -6,10 +6,7 @@ import org.jeasy.random.EasyRandomParameters;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -41,8 +38,6 @@ public class MockServiceProxy implements InvocationHandler {
     /**
      * 生成指定类型的默认值对象（可自行完善默认值逻辑）
      *
-     * @param type
-     * @return
      */
     private Object getDefaultObject(Class<?> type) {
         return generator.nextObject(type);
