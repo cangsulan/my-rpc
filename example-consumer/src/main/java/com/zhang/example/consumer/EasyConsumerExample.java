@@ -6,7 +6,7 @@ import com.zhang.myrpc.proxy.ServiceProxyFactory;
 
 /**
  * @author 30241
- * @version 1.0
+ * @version 1.0‘
  * @description: 简易服务消费者示例
  * @date 2025/10/22 下午5:05
  */
