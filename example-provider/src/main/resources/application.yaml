@@ -1,7 +1,7 @@
 rpc:
   name: zhang-yaml-rpc
   version: 3.0
-  serverPort: 8082
+  serverPort: 8080
   mock: false
   serializer: hessian
 
