@@ -1,8 +1,11 @@
 package com.zhang.myrpc;
 
 import cn.hutool.core.util.StrUtil;
+import com.zhang.myrpc.config.RegistryConfig;
 import com.zhang.myrpc.config.RpcConfig;
 import com.zhang.myrpc.constant.RpcConstant;
+import com.zhang.myrpc.registry.Registry;
+import com.zhang.myrpc.registry.RegistryFactory;
 import com.zhang.myrpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,10 +25,16 @@ public class RpcApplication {
     public static void init(RpcConfig newRpcConfig){
         rpcConfig = newRpcConfig;
         log.info("rpc init, config = {}", newRpcConfig.toString());
+
+        // 注册中心初始化
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("registry init, config = {}", registryConfig);
     }
 
     // 框架初始化，从配置文件读取
-    private static void init(){
+    public static void init(){
         RpcConfig newRpcConfig;
         try {
             newRpcConfig = ConfigUtils.loadConfig(RpcConfig.class, RpcConstant.DEFAULT_CONFIG_PREFIX);
