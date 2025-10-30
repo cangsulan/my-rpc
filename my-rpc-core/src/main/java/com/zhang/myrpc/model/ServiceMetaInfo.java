@@ -70,5 +70,23 @@ public class ServiceMetaInfo {
         return String.format("%s:%s", serviceHost, servicePort);
     }
 
+    // 工具方法，把 serviceNodeKey 转为 serviceKey
+    public static String nodeKeyToServiceKey(String serviceNodeKey) {
+        if (StrUtil.isBlank(serviceNodeKey)) {
+            return null;
+        }
+        // 1. 找到最后一个冒号 ':' 的位置，它分隔了主机和端口
+        int lastColonIndex = serviceNodeKey.lastIndexOf(':');
+        // 2. 找到最后一个斜杠 '/' 的位置，它分隔了serviceKey和主机
+        int lastSlashIndex = serviceNodeKey.lastIndexOf('/');
 
+        // 进行基本的格式校验
+        if (lastSlashIndex == -1 || lastColonIndex == -1 || lastColonIndex < lastSlashIndex) {
+            // 如果格式不符合预期，可以返回空字符串或抛出异常
+            return null;
+        }
+
+        // 3. 截取从开头到最后一个斜杠之前的部分，这就是我们需要的serviceKey
+        return serviceNodeKey.substring(0, lastSlashIndex);
+    }
 }

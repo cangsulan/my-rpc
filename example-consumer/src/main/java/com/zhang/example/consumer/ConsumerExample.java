@@ -15,7 +15,7 @@ import com.zhang.myrpc.utils.ConfigUtils;
  */
 public class ConsumerExample {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 //        //测试配置
 //        RpcConfig rpc = ConfigUtils.loadConfig(RpcConfig.class, "rpc");
 //        System.out.println(rpc);
@@ -33,7 +33,22 @@ public class ConsumerExample {
         } else {
             System.out.println("user == null");
         }
-        long number = userService.getNumber();
-        System.out.println(number);
+        // 多次调用
+
+        User newUser2 = userService.getUser(user);
+        if (newUser2 != null) {
+            System.out.println(newUser2.getName());
+        } else {
+            System.out.println("user == null");
+        }
+
+        Thread.sleep(20*1000);
+
+        User newUser3 = userService.getUser(user);
+        if (newUser3 != null) {
+            System.out.println(newUser3.getName());
+        } else {
+            System.out.println("user == null");
+        }
     }
 }
