@@ -98,8 +98,11 @@ public class EtcdRegistry implements Registry {
 
     @Override
     public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) {
+        // 本地缓存caffeine 的key都是以这个为准，/rpc/serviceKey
+        String searchPrefix = ETCD_ROOT_PATH + serviceKey;
+
         // 优先从缓存获取服务
-        List<ServiceMetaInfo> cachedServiceMetaInfoList = registryServiceCache.getIfPresent(serviceKey);
+        List<ServiceMetaInfo> cachedServiceMetaInfoList = registryServiceCache.getIfPresent(searchPrefix);
         if (cachedServiceMetaInfoList != null) {
             log.debug("从caffeine缓存中读取到了服务地址列表："+cachedServiceMetaInfoList);
             return cachedServiceMetaInfoList;
@@ -108,7 +111,7 @@ public class EtcdRegistry implements Registry {
 
         // 前缀搜索
         // String searchPrefix = ETCD_ROOT_PATH + serviceKey + "/";
-        String searchPrefix = ETCD_ROOT_PATH + serviceKey;
+        // String searchPrefix = ETCD_ROOT_PATH + serviceKey;
 
         try {
             // 前缀查询

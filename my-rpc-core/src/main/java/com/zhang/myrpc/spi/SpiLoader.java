@@ -1,6 +1,7 @@
 package com.zhang.myrpc.spi;
 
 import cn.hutool.core.io.resource.ResourceUtil;
+import com.zhang.myrpc.registry.Registry;
 import com.zhang.myrpc.serializer.Serializer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +52,7 @@ public class SpiLoader {
     /**
      * 动态加载的类列表
      */
-    private static final List<Class<?>> LOAD_CLASS_LIST = Arrays.asList(Serializer.class);
+    private static final List<Class<?>> LOAD_CLASS_LIST = Arrays.asList(Serializer.class, Registry.class);
 
     /**
      * 加载所有类型

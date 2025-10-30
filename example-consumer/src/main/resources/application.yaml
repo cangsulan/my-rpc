@@ -4,6 +4,10 @@ rpc:
   serverPort: 8082
   mock: false
   serializer: hessian
+#  registryConfig:
+#    registry: zookeeper
+#    address: 192.168.1.13:2181
+#    timeout: 10000
 
 test:
   test-content: test

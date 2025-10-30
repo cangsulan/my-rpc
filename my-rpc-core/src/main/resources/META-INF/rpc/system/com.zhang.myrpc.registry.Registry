@@ -1,1 +1,2 @@
 etcd=com.zhang.myrpc.registry.EtcdRegistry
+zookeeper=com.zhang.myrpc.registry.ZooKeeperRegistry
