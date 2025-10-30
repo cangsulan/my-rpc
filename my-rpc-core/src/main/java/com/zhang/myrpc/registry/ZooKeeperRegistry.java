@@ -46,7 +46,7 @@ public class ZooKeeperRegistry implements Registry {
     private final Cache<String,List<ServiceMetaInfo>> registryServiceCache = Caffeine.newBuilder()
             .initialCapacity(10) // 容量限制，可最多同时支持 10 个服务的地址列表的缓存
             .maximumSize(10_000) // 最大内存限制
-            .expireAfterAccess(Duration.ofMinutes(30)) // 有效期 30s
+            .expireAfterWrite(Duration.ofMinutes(30)) // 有效期 30s
             .build();
 
     /**

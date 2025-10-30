@@ -46,7 +46,7 @@ public class EtcdRegistry implements Registry {
     private final Cache<String,List<ServiceMetaInfo>> registryServiceCache = Caffeine.newBuilder()
             .initialCapacity(10) // 容量限制，可最多同时支持 10 个服务的地址列表的缓存
             .maximumSize(10_000) // 最大内存限制
-            .expireAfterAccess(Duration.ofMinutes(30)) // 有效期 30s
+            .expireAfterWrite(Duration.ofMinutes(30)) // 有效期 30s
             .build();
 
     /**
@@ -221,6 +221,12 @@ public class EtcdRegistry implements Registry {
                             log.debug("caffeine 目前缓存情况："+registryServiceCache.asMap().keySet());
                             break;
                         case PUT:
+                            // 清理注册服务缓存，清除的对应服务的列表，serviceKey，而不是serviceNodeKey
+                            serviceKey = ServiceMetaInfo.nodeKeyToServiceKey(serviceNodeKey);
+                            registryServiceCache.invalidate(serviceKey);
+                            log.debug("监听到"+serviceKey+"服务delete，清除了caffeine对应缓存");
+                            log.debug("caffeine 目前缓存情况："+registryServiceCache.asMap().keySet());
+                            break;
                         default:
                             break;
                     }
