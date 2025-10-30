@@ -1,0 +1,2 @@
+no=com.zhang.myrpc.fault.retry.NoRetryStrategy
+fixedInterval=com.zhang.myrpc.fault.retry.FixedIntervalRetryStrategy
