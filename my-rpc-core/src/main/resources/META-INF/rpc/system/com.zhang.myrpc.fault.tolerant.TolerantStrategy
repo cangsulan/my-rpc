@@ -1,0 +1,4 @@
+failBack=com.zhang.myrpc.fault.tolerant.FailBackTolerantStrategy
+failFast=com.zhang.myrpc.fault.tolerant.FailFastTolerantStrategy
+failOver=com.zhang.myrpc.fault.tolerant.FailOverTolerantStrategy
+failSafe=com.zhang.myrpc.fault.tolerant.FailSafeTolerantStrategy

@@ -8,6 +8,8 @@ import com.zhang.myrpc.config.RpcConfig;
 import com.zhang.myrpc.constant.RpcConstant;
 import com.zhang.myrpc.fault.retry.RetryStrategy;
 import com.zhang.myrpc.fault.retry.RetryStrategyFactory;
+import com.zhang.myrpc.fault.tolerant.TolerantStrategy;
+import com.zhang.myrpc.fault.tolerant.TolerantStrategyFactory;
 import com.zhang.myrpc.loadbalancer.LoadBalancer;
 import com.zhang.myrpc.loadbalancer.LoadBalancerFactory;
 import com.zhang.myrpc.model.RpcRequest;
@@ -74,22 +76,30 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName", rpcRequest.getMethodName());
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
 
-
-            // 使用重试机制
-            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
-
-            // 发送请求
-            RpcResponse rpcResponse = retryStrategy.doRetry(() -> {
-                try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMetaInfo.getServiceAddress())
-                        .body(bodyBytes)
-                        .execute()) {
-                    byte[] result = httpResponse.bodyBytes();
-                    // 反序列化
-                    RpcResponse response = serializer.deserialize(result, RpcResponse.class);
-                    return response;
-                }
-            });
-
+            RpcResponse rpcResponse;
+            try {
+                // 使用重试机制
+                RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+                // 发送请求
+                rpcResponse = retryStrategy.doRetry(() -> {
+                    try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMetaInfo.getServiceAddress())
+                            .body(bodyBytes)
+                            .execute()) {
+                        byte[] result = httpResponse.bodyBytes();
+                        // 反序列化
+                        RpcResponse response = serializer.deserialize(result, RpcResponse.class);
+                        return response;
+                    }
+                });
+            }catch (Exception e){
+                // 容错机制
+                TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
+                Map<String,Object> params = new HashMap<>();
+                params.put("rpcRequest", rpcRequest);
+                params.put("failedServiceMetaInfo",selectedServiceMetaInfo);
+                params.put("serviceMetaInfoList", serviceMetaInfoList);
+                rpcResponse = tolerantStrategy.doTolerant(params, e);
+            }
             return rpcResponse.getData();
 
         } catch (IOException e) {
