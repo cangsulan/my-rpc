@@ -1,6 +1,6 @@
 # 基于 Etcd + Vert.x 的RPC框架
 
-#### 轻量级RPC框架
+## 轻量级RPC框架
 
 - **语言**：Java
 - **JDK 版本**：11
@@ -22,31 +22,33 @@
 
 
 
-#### 项目结构
+## 项目结构
 
 ```
 my-rpc/
 │
 ├── my-spring-boot-starter/               # 便于使用的启动包，用自定义注解封装了my-rpc-core
 │
-├── example-springboot-consumer/              # 测试用的，基于注解的 服务消费者 
+├── example-springboot-consumer/              # 用于测试，基于注解的 服务消费者 
 │
-├──example-springboot-provider/               # 测试用的，基于注解的 服务提供者
+├──example-springboot-provider/               # 用于测试，基于注解的 服务提供者
 │
-├── example-consumer/               # 测试用的，服务消费者
+├── example-consumer/               # 用于测试，服务消费者
 │
-├── example-provider/               # 测试用的，服务提供者
+├── example-provider/               # 用于测试，服务提供者
 │
 ├── my-rpc-core/             # 核心模块，是RPC框架的核心底层实现
 │
 ├── my-rpc-easy/            # 一个简易的rpc过程实现，用于早期开发和测试
+|
+├── my-rpc-common/ 			# 用于测试，放测试用的实体类和方法接口
 │
 └── pom.xml                        
 ```
 
 
 
-#### 项目编写过程遇到的问题
+## 项目编写过程遇到的问题
 
 这种轮子项目写起来确实对系统设计的要求高很多，
 
@@ -112,7 +114,7 @@ my-rpc/
 
 
 
-#### 项目目前实现的主要功能 及 缺陷
+## 项目目前实现的主要功能 及 缺陷
 
 通过我的commit的描述可以基本了解这个框架的主要功能：
 
