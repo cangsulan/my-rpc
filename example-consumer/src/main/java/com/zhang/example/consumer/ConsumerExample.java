@@ -3,9 +3,12 @@ package com.zhang.example.consumer;
 
 import com.zhang.example.common.model.User;
 import com.zhang.example.common.service.UserService;
+import com.zhang.myrpc.bootstrap.ConsumerBootstrap;
 import com.zhang.myrpc.config.RpcConfig;
 import com.zhang.myrpc.proxy.ServiceProxyFactory;
 import com.zhang.myrpc.utils.ConfigUtils;
+
+import java.beans.Customizer;
 
 /**
  * @author 30241
@@ -20,7 +23,8 @@ public class ConsumerExample {
 //        RpcConfig rpc = ConfigUtils.loadConfig(RpcConfig.class, "rpc");
 //        System.out.println(rpc);
 
-
+        // 初始化
+        ConsumerBootstrap.init();
 
         // 获取代理
         UserService userService = ServiceProxyFactory.getProxy(UserService.class);

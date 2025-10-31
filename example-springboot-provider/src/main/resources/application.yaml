@@ -1,0 +1,13 @@
+rpc:
+  name: zhang-yaml-rpc
+  version: 3.0
+  serverPort: 8080
+  mock: false
+  serializer: hessian
+#  registryConfig:
+#    registry: zookeeper
+#    address: 192.168.1.13:2181
+#    timeout: 10000
+
+test:
+  test-content: test
